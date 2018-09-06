@@ -1,0 +1,190 @@
+#include<stdio.h>
+#include"serversocket.h"
+
+
+void checkUserID(Serversocket serversocket){
+        char userID[20]=serversocket.recvMsg();
+        if(checkUserIDInMysql("userID")=="exist"){//???
+            serversocket.sendMsg("exist");
+        }
+        else{
+            serversocket.sendMsg("OK");
+        }
+}
+
+
+void userRegister(Serversocket serversocket){
+    char newUserID[20]=serversocket.recvMsg();
+    char newPassWord[20]=serversocket.recvMsg();
+    //store newUserID and newPassWord in Mysql;//???
+}
+
+
+void login(Serversocket serversocket){
+    char userID[20]=serversocket.recvMsg();
+    char passWord[20]=serversocket.recvMsg();
+    if(check userID and passWord in Mysql=="OK"){//???
+        serversocket.sendMsg("correct");
+    }
+    else{
+        serversocket.sendMsg("not correct");
+    }
+}
+
+
+
+void clientSendEmail(Serversocket serversocket){
+    if(char sender[20]=serversocket.recvMsg()){
+        serversocket.sendMsg("OK");
+        if(char title[20]=serversocket.recvMsg()){
+            serversocket.sendMsg("OK");
+            if(char content[1000]=serversocket.recvMsg()){
+                serversocket.sendMsg("OK");
+            }
+            else{
+                serversocket.sendMsg("false");
+            }
+        }
+        else{
+            serversocket.sendMsg("false");
+        }
+    }
+    else{
+        serversocket.sendMsg("false");
+    }
+    //store sender  title  content in Mysql//???
+}
+
+
+void viewRecvedEmail(Serversocket serversocket){
+    int i=0;
+    for(email in Mysql){//???
+        if(email == new email){
+            i++;
+            char giveBack[50]=Mysql`s giveBack;//???
+            serversocket.sendMsg(giveBack);
+        }
+    }
+    if(i<10){
+        for(;i<=10;i++){
+            serversocket.sendMsg(null);
+        }
+    }
+}
+
+
+void viewSendedEmail(Serversocket serversocket){
+    int i=0;
+    for(email in Mysql){//???
+        if(email == sended email){
+            i++;
+            char giveBack[50]=Mysql`giveBack;//???
+            serversocket.sendMsg(giveBack);
+        }
+    }
+    if(i<10){
+        for(;i<=10;i++){
+            serversocket.sendMsg(null);
+        }
+    }
+}
+
+void viewDeletedEmail(Serversocket serversocket){
+    int i=0;
+    for(email in Mysql){//???
+        if(email == Deleted email){
+            i++;
+            char giveBack[50]=Mysql`s giveBack;//???
+            serversocket.sendMsg(giveBack);
+        }
+    }
+    if(i<10){
+        for(;i<=10;i++){
+            serversocket.sendMsg(null);
+        }
+    }
+}
+
+void viewDraftEmail(Serversocket serversocket){
+    int i=0;
+    for(email in Mysql){//???
+        if(email == Draft email){
+            i++;
+            char giveBack[50]=Mysql`s giveBack;//???
+            serversocket.sendMsg(giveBack);
+        }
+    }
+    if(i<10){
+        for(;i<=10;i++){
+            serversocket.sendMsg(null);
+        }
+    }
+}
+
+void viewDetails(Serversocket serversocket){
+    char emailID[20]=serversocket.recvMsg();
+    //Mysql check the details of email and give back three srings which are sender/title/content//???
+    for(email in Mysql){//???
+        if(OneEmailID ==emailID ){//??
+            char sender[20]=Mysql_eamilID.sender;//???
+            char title[20]=Mysql_eamilID.title;//???
+            char content[20]=Mysql_eamilID.content;//???
+            serversocket.sendMsg(sender);
+            serversocket.sendMsg(title);
+            serversocket.sendMsg(content);
+        }
+    }
+}
+
+
+int main(){
+    Serversocket serversocket=new Serversocket();
+    serversocket.createSocketfd();
+    serversocket.bindSocketfd();
+    serversocket.listenSocketfd();
+    while(1){
+        serversocket.acceptSocketfd();
+        switch(serversocket.recvMsg()){
+            case "checkUserID":{
+                checkUserID(serversocket);
+                break;
+            }
+            case "register":{
+                userRegister(serversocket);
+                break;
+            }
+            case "login":{
+                login(serversocket);
+                break;
+            }
+            case "clientSendEmail":{
+                clientSendEmail(serversocket);
+                break;
+            }
+            case "viewRecvedEmail":{
+                viewRecvedEmail(serversocket);
+                break;
+            }
+            case "viewSendedEmail":{
+                viewSendedEmail(serversocket);
+                break;
+            }
+            case "viewDeletedEmail":{
+                viewDeletedEmail(serversocket);
+                break;
+            }
+            case "viewDraftEmail":{
+                viewDraftedEmail(serversocket);
+                break;
+            }
+            case "viewDetails":{
+                viewDetails(serversocket);
+                break;
+            }
+            default:
+        }
+        serversocket.closeConnectfd();
+    }
+    serversocket.closeSocketfd();
+    return 0;
+}
