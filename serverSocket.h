@@ -1,39 +1,43 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SERVER_H
+#define SERVER_H
 
-#include <QMainWindow>
-#include <QTcpServer>
-#include <QTcpSocket>
+#include <QObject>
+#include<QString>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<errno.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<unistd.h>
+#include<arpa/inet.h>
+
+#define BUFFER_SIZE 10000
 
 
-namespace Ui {
-class MainWindow;
-}
 
-class MainWindow : public QMainWindow
+class Serversocket
 {
-    Q_OBJECT
-
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    Serversocket();
+    ~Serversocket();
 
+    int socketfd;
+    int connectfd;
+    int recvNumber;
+    struct sockaddr serveraddr;
+    char buffer[10000];
+
+    void createSocketfd(){}
+    void bindSocketfd(){}
+    void listenSocketfd(){}
+    void acceptSocketfd(){}
+    void sendMsg(char *msg){}
+    void recvMsg(){}
+    void closeSocketfd(){}
+    void closeConnectfd(){}
 private:
-    Ui::MainWindow *ui;
-
-    QTcpServer *server;//创建TCP的服务器对象
-    QTcpSocket *socket;//创建TCP的客户端对象
-private slots:
-    void on_pushButton_Listen_clicked();//监听按钮槽函数
-
-    void on_pushButton_Send_clicked();//发送按钮槽函数
-
-    void server_New_Connect();//服务器接收到客户端信息信号，触发连接槽函数（连接客户端）
-
-    void socket_Read_Data();//服务器读客户端传输过来的数据
-
-    void socket_Disconnect();//断开服务器与客户端连接槽函数
-
 };
 
-#endif // MAINWINDOW_H
+#endif
